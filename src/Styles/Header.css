@@ -1,0 +1,13 @@
+header{
+    padding: 5px;
+    background-color: rgba(0, 0, 0, .2);
+}
+
+h1{
+    color: whitesmoke
+}
+
+i{
+    color: bisque;
+    text-decoration: underline;
+}
