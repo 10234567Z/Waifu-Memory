@@ -26,7 +26,7 @@ export default function Cards() {
             return response.data;
         }
         catch (err) {
-            if(err.response.status === 429){
+            if (err.response.status === 429) {
                 location.reload()
             }
             throw new Error(err.message)
@@ -73,15 +73,13 @@ export default function Cards() {
         randIndex.push(rand)
     }
 
-    console.log(randIndex)
-
     return (
         <>
             {
                 loaded
                     ?
                     <section className="cards">
-                        {Array.from({ length: 16 }, (_, i) => (
+                        {randIndex.map((i) => (
                             <div className="card" key={i}>
                                 <div className="image">
                                     <img src={imgLinks[i]} alt="cardImage" width="200px" height="200px"></img>
