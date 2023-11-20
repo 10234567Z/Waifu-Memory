@@ -1,0 +1,17 @@
+.scoreCard{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.collection{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
