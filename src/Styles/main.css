@@ -15,3 +15,16 @@ main{
     flex-direction: column;
     align-items: center;
 }
+
+.cards{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 220px);
+    gap: 5px;
+    width: 100%;
+}
+
+.card{
+    padding: 5px;
+    border-radius: 7px;
+    border: 1px white solid;
+}
