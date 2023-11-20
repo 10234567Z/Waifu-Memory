@@ -28,15 +28,17 @@ export default function Cards() {
                 do {
                     data = await fetchWaifu();
                 } while (uniqueNames.has(data.names.en));
-                setProgress(i + 1);
                 return data;
             });
+
             let results = await Promise.all(promises)
             results.forEach((data, i) => {
                 setImgLinks((prev) => [...prev, data.images[0]]);
                 setCNames((prev) => [...prev, data.names.en]);
+                if (i === 19) {
+                    setLoaded(true)
+                }
             });
-            setLoaded(true)
         } catch (err) {
             throw new Error(err.message);
         }
@@ -64,7 +66,6 @@ export default function Cards() {
                     :
                     <>
                         <h2>Loading Your Waifies....</h2>
-                        <progress value={progress} max="20" ></progress>
                         <img src={loading} height='500px' width='500px' alt="loading.."></img>
                     </>
             }
