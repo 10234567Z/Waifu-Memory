@@ -13,17 +13,29 @@ export default function Cards() {
     const url = "https://waifu.it/api/waifu";
 
     async function fetchWaifu() {
-        const response = await axios.get(url, {
-            headers: {
-                Authorization: "OTc4NjI0OTc5ODkxNTM1OTAz.MTcwMDIwMTAyNw--.3fc54432151",
-            },
-        });
-        return response.data;
+        try {
+            const response = await axios.get(url, {
+                headers: {
+                    Authorization: "OTc4NjI0OTc5ODkxNTM1OTAz.MTcwMDIwMTAyNw--.3fc54432151",
+                },
+            });
+            if (response.status === 429) {
+                location.reload();
+            }
+
+            return response.data;
+        }
+        catch (err) {
+            if(err.response.status === 429){
+                location.reload()
+            }
+            throw new Error(err.message)
+        }
     }
     async function GetWaifu() {
         const uniqueNames = new Set(cNames);
         try {
-            const promises = Array.from({ length: 20 }, async (_, i) => {
+            const promises = Array.from({ length: 16 }, async (_, i) => {
                 let data;
                 do {
                     data = await fetchWaifu();
@@ -33,9 +45,13 @@ export default function Cards() {
 
             let results = await Promise.all(promises)
             results.forEach((data, i) => {
-                setImgLinks((prev) => [...prev, data.images[0]]);
+                let rand = -1;
+                do {
+                    rand++
+                } while (data.images[rand].includes("thicc.mywaifulist") && rand < data.images.lengths);
+                setImgLinks((prev) => [...prev, data.images[rand]]);
                 setCNames((prev) => [...prev, data.names.en]);
-                if (i === 19) {
+                if (i === 15) {
                     setLoaded(true)
                 }
             });
@@ -48,13 +64,24 @@ export default function Cards() {
         GetWaifu()
     }, [])
 
+    let randIndex = []
+    for (let i = 0; i < 4; i++) {
+        let rand;
+        do {
+            rand = Math.floor(Math.random() * 16)
+        } while (randIndex.includes(rand))
+        randIndex.push(rand)
+    }
+
+    console.log(randIndex)
+
     return (
         <>
             {
                 loaded
                     ?
                     <section className="cards">
-                        {Array.from({ length: 20 }, (_, i) => (
+                        {Array.from({ length: 16 }, (_, i) => (
                             <div className="card" key={i}>
                                 <div className="image">
                                     <img src={imgLinks[i]} alt="cardImage" width="200px" height="200px"></img>
