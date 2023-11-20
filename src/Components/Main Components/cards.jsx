@@ -13,7 +13,7 @@ export default function Cards() {
     const url = "https://waifu.it/api/waifu";
     async function GetWaifu() {
         try {
-            for (let i = 0; i < 15; i++) {
+            for (let i = 0; i < 30; i++) {
                 const { data } = await axios.get(url, {
                     headers: {
                         Authorization: "OTc4NjI0OTc5ODkxNTM1OTAz.MTcwMDIwMTAyNw--.3fc54432151",
@@ -26,7 +26,7 @@ export default function Cards() {
                 else{
                     setImgLinks((prev) => [...prev, data.images[0]]);
                     setCNames((prev) => [...prev, data.names.en]);
-                    if (i === 14) {
+                    if (i === 29) {
                         setLoaded(true);
                     }
                     setProgress(i + 1)
@@ -60,7 +60,7 @@ export default function Cards() {
                     :
                     <>
                         <h2>Loading Your Waifies....</h2>
-                        <progress value={progress} max="15" ></progress>
+                        <progress value={progress} max="30" ></progress>
                         <img src={loading} height='500px' width='500px' alt="loading.."></img>
                     </>
             }
