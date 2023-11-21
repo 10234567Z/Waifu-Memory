@@ -32,7 +32,8 @@ main{
     overflow: hidden;
     transition: all 0.3s ease-in-out;
     background-color: rgba(0, 0, 0, .6);
-    cursor: grabbing;
+    color: whitesmoke;
+    cursor: pointer;
 }
 
 .controls{

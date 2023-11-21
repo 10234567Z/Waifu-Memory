@@ -117,12 +117,12 @@ export default function Cards() {
                     <>
                         <section className="cards">
                             {randIndex.map((i,j) => (
-                                <div className="card" key={i} style={{borderRadius: bRad(j)}}>
+                                <button className="card" key={i} style={{borderRadius: bRad(j)}}>
                                     <div className="image">
                                         <img src={imgLinks[i]} alt="cardImage" width="250px" height="250px"></img>
                                     </div>
                                     <h3>{cNames[i]}</h3>
-                                </div>
+                                </button>
                             ))}
 
                         </section>
