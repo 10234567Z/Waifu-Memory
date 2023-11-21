@@ -22,9 +22,10 @@ main{
 
 .cards{
     display: grid;
-    grid-template-columns: repeat(auto-fit, 250px);
+    grid-template-columns: repeat(4, 200px);
+    justify-content: center;
     gap: 15px;
-    width: 520px;
+    width: 90%;
 }
 
 .card{

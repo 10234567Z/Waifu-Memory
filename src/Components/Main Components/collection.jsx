@@ -1,8 +1,8 @@
 import Cards from "./cards"
-export default function Collection(){
+export default function Collection( {onScoreUpdate, putHighest , reset}){
     return (
         <section className="collection">
-            <Cards></Cards>
+            <Cards onScoreUpdate={onScoreUpdate} putHighest={putHighest} reset={reset}></Cards>
         </section>
     )
 }

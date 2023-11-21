@@ -3,18 +3,17 @@ import axios from "axios";
 import loading from "./Assets/loading.gif"
 import { Progress } from "rsup-progress";
 
-export default function Cards() {
-    const [clicked, setClicked] = useState(false)
-    const [selected, setSelected] = useState([])
+export default function Cards({onScoreUpdate, putHighest , reset}) {
     const [loaded, setLoaded] = useState(false)
     const [imgLinks, setImgLinks] = useState([])
     const [cNames, setCNames] = useState([])
+    const [started, setStarted] = useState(false)
     const url = "https://waifu.it/api/waifu";
 
     useEffect(() => {
         const progress = new Progress({
             height: 5,
-            color: 'red',
+            color: '#BEADFA',
         })
         const fetchWaifu = async () => {
             try {
@@ -38,25 +37,32 @@ export default function Cards() {
         }
 
         const GetWaifu = async () => {
-            const uniqueNames = new Set(cNames);
+            let uniqueNames = []
             try {
                 progress.start()
+                let data;
                 const promises = Array.from({ length: 16 }, async (_, i) => {
-                    let data;
-                    do {
+                    if (i > 1) {
                         data = await fetchWaifu();
-                    } while (uniqueNames.has(data.names.en));
+                        while (uniqueNames.includes(data.names.en)) {
+                            data = await fetchWaifu();
+                        }
+                    }
+                    else {
+                        data = await fetchWaifu();
+                        uniqueNames.push(data.names.en)
+                    }
                     return data;
                 });
 
                 let results = await Promise.all(promises)
                 results.forEach((data, i) => {
                     let rand = 0;
-                    while (rand < data.images.lengths && data.images[rand].includes("thicc.mywaifulist")){
+                    while (rand < data.images.lengths && data.images[rand].includes("thicc.mywaifulist")) {
                         rand++
                     };
                     setImgLinks((prev) => [...prev, data.images[rand]]);
-                    setCNames((prev) => [...prev, data.names.en]);
+                    setCNames((prev) => [...prev, { name: data.names.en, selected: false }]);
                 });
                 setLoaded(true)
                 progress.end()
@@ -76,11 +82,11 @@ export default function Cards() {
             }
         }
         LoadWaifuData();
-        
+
     }, [])
 
     let randIndex = []
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 16; i++) {
         let rand = Math.floor(Math.random() * 16)
         while (randIndex.includes(rand)) {
             rand = Math.floor(Math.random() * 16)
@@ -101,13 +107,14 @@ export default function Cards() {
 
 
     const bRad = (i) => {
-        if(i % 2 == 0){
+        if (i % 2 == 0) {
             return "0 10px 0 10px"
         }
-        else{
+        else {
             return "10px 0 10px 0"
         }
     }
+
 
     return (
         <>
@@ -116,19 +123,38 @@ export default function Cards() {
                     ?
                     <>
                         <section className="cards">
-                            {randIndex.map((i,j) => (
-                                <button className="card" key={i} style={{borderRadius: bRad(j)}}>
+                            {randIndex.map((i, j) => (
+                                <button className="card" key={i}
+                                    onClick={(e) => {
+                                        let copyC = cNames.slice()
+                                        if (copyC[i].selected === false) {
+                                            copyC[i].selected = true;
+                                            setCNames(copyC)
+                                            setStarted(true)
+                                            onScoreUpdate()
+                                            putHighest()
+                                        }
+                                        else {
+                                            for(let i = 0; i < copyC.length; i++){
+                                                copyC[i].selected = false;
+                                            }
+                                            setCNames(copyC)
+                                            reset()
+                                            alert("Game Joevari")
+                                        }
+                                    }}
+                                    style={{ borderRadius: bRad(j) }}>
                                     <div className="image">
-                                        <img src={imgLinks[i]} alt="cardImage" width="250px" height="250px"></img>
+                                        <img src={imgLinks[i]} alt="cardImage" width="200px" height="200px"></img>
                                     </div>
-                                    <h3>{cNames[i]}</h3>
+                                    <h3>{cNames[i].name}</h3>
                                 </button>
                             ))}
 
                         </section>
                         <div className="controls">
                             <button onClick={reload}>Reload Waifus</button>
-                            { localStorage.getItem("Character Names") == null && <button onClick={save}>Save Loaded Collection</button>}
+                            {localStorage.getItem("Character Names") == null && !started && <button onClick={save}>Save Loaded Collection</button>}
                         </div>
                     </>
                     :
