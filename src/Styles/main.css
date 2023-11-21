@@ -2,6 +2,9 @@
     display: flex;
     justify-content: center;
     gap: 10px;
+    background-color: rgba(0, 0, 0, .4);
+    font-size: 30px;
+    margin-bottom: 20px;
 }
 
 main{
@@ -14,32 +17,44 @@ main{
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 10px;
 }
 
 .cards{
     display: grid;
-    grid-template-columns: repeat(auto-fit, 220px);
+    grid-template-columns: repeat(auto-fit, 250px);
     gap: 15px;
-    width: 500px;
+    width: 520px;
 }
 
 .card{
-    padding: 5px;
-    border-radius: 7px;
-    border: 1px white solid;
+    border: 1px black solid;
     overflow: hidden;
     transition: all 0.3s ease-in-out;
+    background-color: rgba(0, 0, 0, .6);
+    cursor: grabbing;
+}
+
+.controls{
+    display: flex;
+    gap: 8px;
 }
 
 @media (hover: hover){
     .card:hover{
-        box-shadow: white 0px 1px 2px 0px, white 0px 1px 3px 1px;
+        box-shadow: black 0px 1px 2px 0px, black 0px 1px 3px 1px;
+    }
+}
+@media (max-width: 550px){
+    .cards{
+        width: 300px;
     }
 }
 
 
 .image > img{
     transition: transform 0.4s ease-in-out;
+    margin-bottom: 8px;
 }
 
 .image > img:hover {
