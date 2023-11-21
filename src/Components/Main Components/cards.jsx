@@ -51,10 +51,10 @@ export default function Cards() {
 
                 let results = await Promise.all(promises)
                 results.forEach((data, i) => {
-                    let rand = -1;
-                    do {
+                    let rand = 0;
+                    while (rand < data.images.lengths && data.images[rand].includes("thicc.mywaifulist")){
                         rand++
-                    } while (data.images[rand].includes("thicc.mywaifulist") && rand < data.images.lengths);
+                    };
                     setImgLinks((prev) => [...prev, data.images[rand]]);
                     setCNames((prev) => [...prev, data.names.en]);
                 });
