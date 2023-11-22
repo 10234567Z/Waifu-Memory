@@ -8,6 +8,7 @@ export default function Cards({onScoreUpdate, putHighest , reset}) {
     const [imgLinks, setImgLinks] = useState([])
     const [cNames, setCNames] = useState([])
     const [started, setStarted] = useState(false)
+    const [reloaded , setReloaded] = useState(false)
 
     useEffect(() => {
         const progress = new Progress({
@@ -51,7 +52,7 @@ export default function Cards({onScoreUpdate, putHighest , reset}) {
         }
         LoadWaifuData();
 
-    }, [])
+    }, [reloaded])
 
     let randIndex = []
     for (let i = 0; i < 16; i++) {
@@ -64,7 +65,7 @@ export default function Cards({onScoreUpdate, putHighest , reset}) {
 
     const reload = () => {
         localStorage.clear()
-        location.reload();
+        setReloaded(!reloaded)
     }
 
     const save = (e) => {
