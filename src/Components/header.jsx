@@ -4,17 +4,18 @@ import Audio from '../assets/background.mp3'
 import MusicPIC from '../assets/music.svg'
 
 export default function Header() {
-    const [play, setPlay] = useState(true)
+    const [play, setPlay] = useState(false)
     return (
         <header>
-            <button className="musicC" onClick={() => setPlay(!play)}>
-                <img src={MusicPIC} width="50px" height="50px" className='musicPIC'></img>
-            </button>
             {
-                play && <audio autoPlay hidden loop>
+                play &&
+                <audio autoPlay hidden loop>
                     <source src={Audio}></source>
                 </audio>
             }
+            <button className="musicC" onClick={() => setPlay(!play)}>
+                <img src={MusicPIC} width="50px" height="50px" className='musicPIC'></img>
+            </button>
             <h1>Waifu Memories</h1>
             <i>
                 <h3>Let's test how well you remember your waifus</h3>
