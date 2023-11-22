@@ -109,12 +109,11 @@ export default function Cards({onScoreUpdate, putHighest , reset}) {
                                             setCNames(copyC)
                                             setStarted(false)
                                             reset()
-                                            alert("Game Joevari")
                                         }
                                     }}
                                     style={{ borderRadius: bRad(j) }}>
                                     <div className="image">
-                                        <img src={imgLinks[i]} alt="cardImage" width="200px" height="200px"></img>
+                                        <img src={imgLinks[i]} alt="cardImage" width="250px" height="250px"></img>
                                     </div>
                                     <h3>{cNames[i].name}</h3>
                                 </button>

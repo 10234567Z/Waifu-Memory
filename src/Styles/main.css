@@ -13,21 +13,22 @@ main {
     display: flex;
     flex-direction: column;
     padding: 10px;
+    height: 100%;
 }
 
 .collection {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 30px;
+    justify-content: space-around;
 }
 
 .cards {
     display: grid;
-    grid-template-columns: repeat(4, 200px);
+    grid-template-columns: repeat(4, 250px);
     justify-content: center;
     gap: 20px;
-    width: 90%;
 }
 
 .card {
@@ -46,7 +47,7 @@ main {
 
 .controls>button {
     color: bisque;
-
+    font-size: 1.8rem;
 }
 
 @media (hover: hover) {
@@ -55,11 +56,37 @@ main {
     }
 }
 
-@media (max-width: 550px) {
+@media (max-width: 1090px) {
+    .image>img {
+        width: 200px;
+        height: 200px;
+    }
+
     .cards {
-        width: 300px;
+        grid-template-columns: repeat(4, 200px);
     }
 }
+
+@media (max-width: 900px) {
+    .image>img {
+        width: 125px;
+        height: 125px;
+    }
+
+    .cards {
+        grid-template-columns: repeat(4, 125px);
+    }
+}
+
+@media (max-width: 600px) {
+    .controls>button {
+        font-size: 1rem;
+    }
+    .cards {
+        grid-template-columns: repeat(2, 125px);
+    }
+}
+
 
 
 .image>img {
