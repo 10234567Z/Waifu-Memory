@@ -1,4 +1,4 @@
-.scoreCard{
+.scoreCard {
     display: flex;
     justify-content: center;
     gap: 10px;
@@ -9,28 +9,28 @@
     top: 0;
 }
 
-main{
+main {
     display: flex;
     flex-direction: column;
     padding: 10px;
 }
 
-.collection{
+.collection {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
 }
 
-.cards{
+.cards {
     display: grid;
     grid-template-columns: repeat(4, 200px);
     justify-content: center;
-    gap: 15px;
+    gap: 20px;
     width: 90%;
 }
 
-.card{
+.card {
     border: 1px black solid;
     overflow: hidden;
     transition: all 0.3s ease-in-out;
@@ -39,28 +39,34 @@ main{
     cursor: pointer;
 }
 
-.controls{
+.controls {
     display: flex;
     gap: 8px;
 }
 
-@media (hover: hover){
-    .card:hover{
+.controls>button {
+    color: bisque;
+
+}
+
+@media (hover: hover) {
+    .card:hover {
         box-shadow: black 0px 1px 2px 0px, black 0px 1px 3px 1px;
     }
 }
-@media (max-width: 550px){
-    .cards{
+
+@media (max-width: 550px) {
+    .cards {
         width: 300px;
     }
 }
 
 
-.image > img{
+.image>img {
     transition: transform 0.4s ease-in-out;
     margin-bottom: 8px;
 }
 
-.image > img:hover {
+.image>img:hover {
     transform: scale(1.1);
 }
