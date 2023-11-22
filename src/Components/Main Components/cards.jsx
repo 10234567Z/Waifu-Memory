@@ -70,7 +70,7 @@ export default function Cards({onScoreUpdate, putHighest , reset}) {
     const save = (e) => {
         localStorage.setItem('Character Names', JSON.stringify(cNames))
         localStorage.setItem('image links', JSON.stringify(imgLinks))
-        e.target.remove();
+        setStarted(true)
     }
 
 
@@ -107,6 +107,7 @@ export default function Cards({onScoreUpdate, putHighest , reset}) {
                                                 copyC[i].selected = false;
                                             }
                                             setCNames(copyC)
+                                            setStarted(false)
                                             reset()
                                             alert("Game Joevari")
                                         }
