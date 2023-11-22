@@ -8,7 +8,6 @@ export default function Cards({onScoreUpdate, putHighest , reset}) {
     const [imgLinks, setImgLinks] = useState([])
     const [cNames, setCNames] = useState([])
     const [started, setStarted] = useState(false)
-    const url = "https://waifu.it/api/waifu";
 
     useEffect(() => {
         const progress = new Progress({
@@ -17,52 +16,21 @@ export default function Cards({onScoreUpdate, putHighest , reset}) {
         })
         const fetchWaifu = async () => {
             try {
-                const response = await axios.get(url, {
-                    headers: {
-                        Authorization: "OTc4NjI0OTc5ODkxNTM1OTAz.MTcwMDIwMTAyNw--.3fc54432151",
-                    },
-                });
-                if (response.status === 429) {
-                    location.reload();
-                }
-
+                const response = await axios.get("https://waifuserv.onrender.com/end/16")
                 return response.data;
             }
             catch (err) {
-                if (err.response.status === 429) {
-                    location.reload()
-                }
                 throw new Error(err.message)
             }
         }
 
         const GetWaifu = async () => {
-            let uniqueNames = []
             try {
                 progress.start()
-                let data;
-                const promises = Array.from({ length: 16 }, async (_, i) => {
-                    if (i > 1) {
-                        data = await fetchWaifu();
-                        while (uniqueNames.includes(data.names.en)) {
-                            data = await fetchWaifu();
-                        }
-                    }
-                    else {
-                        data = await fetchWaifu();
-                        uniqueNames.push(data.names.en)
-                    }
-                    return data;
-                });
-
-                let results = await Promise.all(promises)
+                const results = await fetchWaifu();
                 results.forEach((data, i) => {
-                    let rand = 0;
-                    while (rand < data.images.lengths && data.images[rand].includes("thicc.mywaifulist")) {
-                        rand++
-                    };
-                    setImgLinks((prev) => [...prev, data.images[rand]]);
-                    setCNames((prev) => [...prev, { name: data.names.en, selected: false }]);
+                    setImgLinks((prev) => [...prev, data.url]);
+                    setCNames((prev) => [...prev, { name: data.name, selected: false }]);
                 });
                 setLoaded(true)
                 progress.end()
