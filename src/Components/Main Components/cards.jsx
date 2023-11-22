@@ -3,7 +3,7 @@ import axios from "axios";
 import loading from "./Assets/loading.gif"
 import { Progress } from "rsup-progress";
 
-export default function Cards({onScoreUpdate, putHighest , reset}) {
+export default function Cards({ onScoreUpdate, putHighest, reset }) {
     const [loaded, setLoaded] = useState(false)
     const [imgLinks, setImgLinks] = useState([])
     const [cNames, setCNames] = useState([])
@@ -26,14 +26,19 @@ export default function Cards({onScoreUpdate, putHighest , reset}) {
         }
 
         const GetWaifu = async () => {
+            let copyC = []
+            let copyI = []
             try {
                 progress.start()
                 const results = await fetchWaifu();
-                results.forEach((data, i) => {
-                    setImgLinks((prev) => [...prev, data.url]);
-                    setCNames((prev) => [...prev, { name: data.name, selected: false }]);
+                results.forEach((data) => {
+                    copyC.push({ name: data.name, selected: false })
+                    copyI.push(data.url)
+                    setImgLinks(copyI);
+                    setCNames(copyC);
                 });
                 setLoaded(true)
+                console.log(copyC , copyI)
                 progress.end()
             } catch (err) {
                 throw new Error(err.message);
@@ -51,7 +56,6 @@ export default function Cards({onScoreUpdate, putHighest , reset}) {
             }
         }
         LoadWaifuData();
-
     }, [reloaded])
 
     let randIndex = []
@@ -65,7 +69,11 @@ export default function Cards({onScoreUpdate, putHighest , reset}) {
 
     const reload = () => {
         localStorage.clear()
+        setCNames([])
+        setImgLinks([])
         setReloaded(!reloaded)
+        setLoaded(false)
+        setStarted(false)
     }
 
     const save = (e) => {
@@ -104,7 +112,7 @@ export default function Cards({onScoreUpdate, putHighest , reset}) {
                                             putHighest()
                                         }
                                         else {
-                                            for(let i = 0; i < copyC.length; i++){
+                                            for (let i = 0; i < copyC.length; i++) {
                                                 copyC[i].selected = false;
                                             }
                                             setCNames(copyC)
